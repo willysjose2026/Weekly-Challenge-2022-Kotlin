@@ -13,6 +13,19 @@
  * - Para que resulte más simple, trabajaremos en céntimos con monedas
  *   de 5, 10, 50, 100 y 200.
  * - Debemos controlar que las monedas enviadas estén dentro de las soportadas.
+ * 
+ *   Solucion dada por mi: crear un diccionario para los productos, sus precios y su codigo. Crear 3 funciones (tal vez
+ *   inncesarias pero hacen ver mejor al codigo) para validar su existe el producto, si el monto es suficiente y si las
+ *   monedas ingresadas son las correctas. Para la parte principal nuestro metodo fue realizando division, quedandonos 
+ *   con el resto y haciendo un bucle for de 0 hasta el cociente de la division, donde dicho cociente es la cantidad de
+ *   la moneda x a devolverse, cambiando luego el cambio por el restante de la division y repitiendo el proceso hasta 
+ *   llegar a 0.
+ *   
+ *   El proceso se pudo simplificar, sencillamente con un bucle for dentro de un while, comparando la moneda mas grande 
+ *   con el cambio, y de ser esta moneda menor o igual al cambio, restarle su monto a este, añadir la moneda al array y 
+ *   romper el bucle for para que vuelva a revaluar la condicion de que el cambio sea distinto de 0.
+ *   
+ *   NOTAS: MIRAR CORRECCIONES DEL CODIGO ABAJO
  */
 
 using System.Runtime.CompilerServices;
@@ -32,19 +45,20 @@ internal class Program
 
         foreach(var coffe in CoffeTestInput)
         {
-            KeyValuePair<string, int[]>? result = ExpandableMachine(coffe.Key, coffe.Value);
-            if (result != null)
-                Console.WriteLine(result.Value.Key + " [" + string.Join(",", result.Value.Value) + "]");
-
+            KeyValuePair<string, int[]> result = ExpandableMachine(coffe.Key, coffe.Value);
+            Console.WriteLine(result.Key + " [" + string.Join(",", result.Value) + "]");
         }
     }
-    private static KeyValuePair<string, int[]>? ExpandableMachine(int[] coins, int option)
+    private static KeyValuePair<string, int[]> ExpandableMachine(int[] coins, int option)
     {
         if (!IsOptionValid(option))
-        {
+            /*NOTAS
+             * LA FORMA EN QUE LO HICE
             Console.WriteLine("La opcion que ha introducido es incorrecta");
-            return null;
-        }
+            return new KeyValuePair<string, int[]>("", coins);
+
+            UNA MEJORADA*/
+            return new KeyValuePair<string, int[]>("La opcion que ha introducido es incorrecta", coins);
 
         int[] SupportedCoins = { 5, 10, 50, 100, 200 };
         Array.Reverse(SupportedCoins);
@@ -53,24 +67,21 @@ internal class Program
         int balance = coins.Sum();
 
         if (!AreCoinsSupported(coins, SupportedCoins))
-        {
-            Console.WriteLine("Las monedas soportadas son: 5, 10, 50, 100 y 200");
-            return null;
-        }
+            return new KeyValuePair<string, int[]>("Las monedas soportadas son: 5, 10, 50, 100 y 200", coins);
         else if (!IsBalanceSufficient(balance, coffeCost))
-        {
-            Console.WriteLine("El balance introducido es insuficiente");
-            return new KeyValuePair<string, int[]>("", coins);
-        }
+            return new KeyValuePair<string, int[]>("El balance introducido es insuficiente", coins);
         else
         {
             int[] changeInCoins = Array.Empty<int>();
             int change = balance - coffeCost;
 
+            /*NOTAS
+             * LA FORMA EN QUE LO HICE
             foreach (int supportedCoin in SupportedCoins)
             {
                 int NumberOfCoins = change / supportedCoin;
                 int remainder = change % supportedCoin;
+
                 if (remainder > 0)
                 {
                     for (int i = 0; i < NumberOfCoins; i++)
@@ -88,6 +99,21 @@ internal class Program
                     }
                 }
             }
+
+            UNA FORMA MAS LIMPIA Y CORTA, Y MEJORADA DE LA VERSION DE MAUREDEV*/
+            while(change != 0)
+            {
+                foreach (var coin in SupportedCoins)
+                {
+                    if (coin <= change)
+                    {
+                        change -= coin;
+                        changeInCoins = changeInCoins.Append(coin).ToArray();
+                        break;
+                    }
+                }
+            }
+            
             return new KeyValuePair<string, int[]>(coffeName, changeInCoins);
         }
     }
