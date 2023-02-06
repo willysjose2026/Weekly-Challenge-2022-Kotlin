@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLegendOfZelda_ReleaseDates", "TheLegendOfZelda_ReleaseDates\TheLegendOfZelda_ReleaseDates.csproj", "{096ABE5D-7182-4F2F-B21A-72157BCE0998}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{096ABE5D-7182-4F2F-B21A-72157BCE0998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{096ABE5D-7182-4F2F-B21A-72157BCE0998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{096ABE5D-7182-4F2F-B21A-72157BCE0998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{096ABE5D-7182-4F2F-B21A-72157BCE0998}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C65752E2-C921-480F-B9BF-8F25579C7363}
+	EndGlobalSection
+EndGlobal
